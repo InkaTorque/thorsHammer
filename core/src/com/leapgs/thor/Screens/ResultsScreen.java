@@ -19,7 +19,7 @@ public class ResultsScreen extends BaseScreen {
     int lastLevel;
 
     TextButton goToMainMenuBtn,goToNextLevelButton;
-    Label resultMessage,hiScoreMessage,currentScoreMessage;
+    Label currentScoreMessage;
 
     private boolean won;
 
@@ -49,25 +49,15 @@ public class ResultsScreen extends BaseScreen {
         style.font=game.font;
         style.fontColor= Color.BLACK;
 
-        resultMessage = new Label("LEVEL COMPLETED",style);
-        currentScoreMessage = new Label("LEVEL "+lastLevel+" SCORE = "+game.scorePrefs.getFloat("currentScore"+lastLevel),style);
-        hiScoreMessage = new Label("LEVEL "+lastLevel+" HIGH SCORE IS = "+game.scorePrefs.getFloat("highScore"+lastLevel),style);
+        currentScoreMessage = new Label("STARS = "+game.scorePrefs.getFloat("level"+lastLevel+"starts"),style);
 
-        resultMessage.setAlignment(Align.center);
         currentScoreMessage.setAlignment(Align.center);
-        hiScoreMessage.setAlignment(Align.center);
 
-        resultMessage.setColor(Color.WHITE);
         currentScoreMessage.setColor(Color.WHITE);
-        hiScoreMessage.setColor(Color.WHITE);
 
-        resultMessage.setSize(150,50);
         currentScoreMessage.setSize(150,50);
-        hiScoreMessage.setSize(150,50);
 
-        resultMessage.setPosition(125,350);
         currentScoreMessage.setPosition(125,300);
-        hiScoreMessage.setPosition(125,250);
 
         goToMainMenuBtn = new TextButton("Go to Main Menu",game.skin,"default");
         goToMainMenuBtn.addListener( new ClickListener(){
@@ -101,8 +91,6 @@ public class ResultsScreen extends BaseScreen {
 
         }
         stage.addActor(goToMainMenuBtn);
-        stage.addActor(resultMessage);
-        stage.addActor(hiScoreMessage);
         stage.addActor(currentScoreMessage);
     }
 

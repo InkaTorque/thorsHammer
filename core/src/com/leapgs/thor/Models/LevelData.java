@@ -10,7 +10,7 @@ public class LevelData {
 
     private int levelNumber;
     private float levelTime;
-    private int numberOfTargets;
+    private int numberOfTargets,starTime1,starTime2,starTime3;
 
     private Array<Target> targets;
 
@@ -48,6 +48,30 @@ public class LevelData {
 
     public LevelData() {
 
+    }
+
+    public int getStarTime1() {
+        return starTime1;
+    }
+
+    public void setStarTime1(int starTime1) {
+        this.starTime1 = starTime1;
+    }
+
+    public int getStarTime2() {
+        return starTime2;
+    }
+
+    public void setStarTime2(int starTime2) {
+        this.starTime2 = starTime2;
+    }
+
+    public int getStarTime3() {
+        return starTime3;
+    }
+
+    public void setStarTime3(int starTime3) {
+        this.starTime3 = starTime3;
     }
 
     @Override

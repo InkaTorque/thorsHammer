@@ -2,6 +2,9 @@
 levelNumber: 1
 levelTime: 30
 numberOfTargets: 5
+starTime1: 25
+starTime2: 20
+starTime3: 10
 targets: [
 	{
 		posX: 300

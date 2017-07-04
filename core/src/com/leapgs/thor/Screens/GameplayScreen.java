@@ -1,11 +1,8 @@
 package com.leapgs.thor.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
@@ -19,7 +16,6 @@ import com.leapgs.thor.InputProcessors.GameplayInputProcessor;
 import com.leapgs.thor.MainGame;
 import com.leapgs.thor.Models.LevelData;
 import com.leapgs.thor.Models.Target;
-import com.sun.org.apache.xpath.internal.SourceTree;
 
 /**
  * Created by Leap-Pancho on 6/21/2017.
@@ -32,7 +28,7 @@ public class GameplayScreen extends BaseScreen {
 
     private int currentLevel,numberOfTargets;
     private boolean won;
-    private float currentPoints,levelTime;
+    private float currentPoints, currentTimeLeft;
 
     private Group foregroundGroup,backgroundGroup;
 
@@ -102,7 +98,7 @@ public class GameplayScreen extends BaseScreen {
         String levelString = file.readString();
         Json json = new Json();
         currentLevelData = json.fromJson(LevelData.class,levelString);
-        levelTime = currentLevelData.getLevelTime();
+        currentTimeLeft = currentLevelData.getLevelTime();
         numberOfTargets = currentLevelData.getNumberOfTargets();
         currentTargets = currentLevelData.getTargets();
     }
@@ -152,10 +148,10 @@ public class GameplayScreen extends BaseScreen {
     public void render(float delta) {
         super.render(delta);
 
-        levelTime = levelTime - delta;
-        timeLeftLabel.setText("TIME LEFT = "+levelTime);
+        currentTimeLeft = currentTimeLeft - delta;
+        timeLeftLabel.setText("TIME LEFT = "+ currentTimeLeft);
 
-        if(levelTime<=0)
+        if(currentTimeLeft <=0)
         {
             won=false;
             endGame();
@@ -164,24 +160,38 @@ public class GameplayScreen extends BaseScreen {
     }
 
     private void endGame() {
-
-        if (game.scorePrefs.getFloat("highScore"+currentLevel, -1000) == -1000)
-        {
-            game.scorePrefs.putFloat("highScore"+currentLevel,currentPoints);
-        }
-        else
-        {
-            if(game.scorePrefs.getFloat("highScore"+currentLevel)<currentPoints)
-            {
-                game.scorePrefs.putFloat("highScore"+currentLevel,currentPoints);
-            }
-        }
-        game.scorePrefs.putFloat("currentScore"+currentLevel,currentPoints);
-
+        game.scorePrefs.putFloat("level"+currentLevel+"starts",calculateStarRating());
 
         game.goToResultsScreen(currentLevel,won);
         game.scorePrefs.flush();
 
+    }
+
+    private int calculateStarRating() {
+        int stars;
+        float playtime = currentLevelData.getLevelTime() - currentTimeLeft;
+        if(playtime<=currentLevelData.getStarTime3())
+        {
+            stars=3;
+        }
+        else
+        {
+            if(playtime<=currentLevelData.getStarTime2())
+            {
+                stars=2;
+            }
+            else
+            {
+                if(playtime<=currentLevelData.getStarTime1())
+                {
+                    stars=1;
+                }
+                else {
+                    stars=0;
+                }
+            }
+        }
+        return stars;
     }
 
 
