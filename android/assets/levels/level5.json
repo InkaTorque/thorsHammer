@@ -1,0 +1,31 @@
+{
+levelNumber: 1
+levelTime: 30
+numberOfTargets: 5
+targets: [
+	{
+		posX: 300
+		posY: 50
+		movementAmplitude: 20
+		movementType: STATIC
+	}
+	{
+		posX: 150
+		posY: 50
+		movementAmplitude: 20
+		movementType: HORIZONTAL
+	}
+	{
+		posX: 300
+		posY: 150
+		movementAmplitude: 20
+		movementType: VERTICAL
+	}
+	{
+		posX: 220
+		posY: 50
+		movementAmplitude: 20
+		movementType: HORIZONTAL
+	}
+]
+}
